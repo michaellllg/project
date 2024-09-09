@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="img/cjc.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/attendance.css">
+    <title>CJCRSG</title>
+</head>
+<body>
+    <header>
+        <li class="logo-img"><a href="index.html"><img src="img/cjc.png" alt="logo"></a></li>
+        <div class="logo">Church of Jesus Christ the Risen Son of God Phils. Inc</div>
+        <input type="checkbox" id="nav_check" hidden>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Back</a>
+                </li>
+            </ul>
+        </nav>
+        <label for="nav_check" class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+    </header>
+
+    <div class="wrapper">
+        <h3>Attendance Login</h3>
+        <form id="attendance-form">
+          <!-- Add the name attribute to the input field -->
+          <div class="field email">
+            <div class="input-area">
+              <input type="text" name="memberID" id="memberID" placeholder="Enter your Member ID">
+              <!-- Note the name attribute above -->
+              <i class="icon fas fa-envelope"></i>
+              <i class="error error-icon fas fa-exclamation-circle"></i>
+            </div>
+            <div class="error error-txt">Member ID can't be blank</div>
+          </div>
+         
+          <!-- Add ID to submit button -->
+          <input type="submit" id="submit-btn" value="Login">
+        </form>
+      </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('attendance-form');
+            const errorTxt = document.querySelector('.error-txt');
+    
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+    
+                const memberID = document.getElementById('memberID').value.trim();
+    
+                if (memberID !== '') {
+                    fetch('http://localhost/cjc0/php/insert.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ memberID: memberID })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Check if response is not empty
+                        if (data) {
+                            // Check if attendance recorded successfully
+                            if (data.success) {
+                                window.location.href = 'attendanceRecorded.html';
+                            } else {
+                                // Handle other responses
+                                alert(data.message || "Error recording attendance");
+                            }
+                        } else {
+                            throw new Error('Empty response received');
+                        }
+                    })
+                    .catch(error => {
+                        // Handle fetch error
+                        alert("Error: " + error.message);
+                    });
+                } else {
+                    // Display error if memberID is empty
+                    errorTxt.textContent = "Member ID can't be blank";
+                }
+            });
+        });
+      </script>
+    
+</body>
+</html>
