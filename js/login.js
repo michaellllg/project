@@ -73,11 +73,11 @@ form.onsubmit = async (e) => {
                 if (data.role === 'Admin') {
                     // Authentication successful for admin, redirect to admin dashboard
                     const memberID = data.memberID;
-                    const dashboardURL = `/cjc0/Dashboard.html?memberID=${memberID}`;
+                    const dashboardURL = `/project/Dashboard.html?memberID=${memberID}`;
                     window.location.href = dashboardURL;
                 } else {
                     // Authentication successful for member or visitor, redirect to member dashboard
-                    window.location.href = '/cjc0/memberDash.html';
+                    window.location.href = '/project/memberDash.html';
                 }
             } else {
                 // Authentication failed, display specific error message
