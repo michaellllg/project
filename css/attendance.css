@@ -262,10 +262,17 @@ header nav ul li a.active {
     background: #536fe2;
   }
 
+  .qrscanner a{
+    color: #3c58c9;
+    text-decoration: none;
+    position: relative;
+    top: 10px;
+
+
+  }
 
 
 
-  
 
 /*responsive all*/
 
