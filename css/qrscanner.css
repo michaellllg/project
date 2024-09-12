@@ -143,6 +143,8 @@ button:hover {
 }
 
 .inputID a{
+    color: #0F3E84;
+    font-style: normal;
     position: relative;
     bottom: 38px;
     left: 160px;
